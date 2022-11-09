@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:weather/pages/details.dart';
 
 class HomeDescription extends StatefulWidget {
   const HomeDescription({super.key});
@@ -17,15 +18,20 @@ class _HomeDescriptionState extends State<HomeDescription> {
       padding: const EdgeInsets.only(top: 15),
       child: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            height: 193,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(colors: [
-                  Color(0xff4F7FFA),
-                  Color(0xff335FD1),
-                ])),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => DetailsScreen())));
+            },
+            child: Container(
+              width: double.infinity,
+              height: 193,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: LinearGradient(colors: [
+                    Color(0xff4F7FFA),
+                    Color(0xff335FD1),
+                  ])),
+            ),
           ),
           Positioned(
             top: 20,
