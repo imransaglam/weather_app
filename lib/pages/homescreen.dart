@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:weather/widgets/homescree_desc_text2.dart';
 import 'package:weather/widgets/homescreen_appbar.dart';
+import 'package:weather/widgets/homescreen_card_items.dart';
 import 'package:weather/widgets/homescreen_desc_card.dart';
 import 'package:weather/widgets/homescreen_desc_text.dart';
 import 'package:weather/widgets/homescreen_description.dart';
@@ -94,6 +95,26 @@ class _HomeScreenState extends State<HomeScreen> {
     "10.00 PM",
     "11.00 PM",
   ];
+  List<String> weatherImages=[
+    "assets/images/Rain_storm.png",
+    "assets/images/rainy2.png",
+    "assets/images/Rain_storm.png",
+  ];
+   List<String> weatherCities=[
+    "Selasa",
+    "Rabu",
+    "Kamis",
+  ];
+   List<String> cities=[
+    "Hujan Petir",
+    "Hujan Deras",
+    "Hujan Deras",
+  ];
+   List<String> numbers=[
+    "19",
+    "17",
+    "17",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +142,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   })),
                 ),
                 HomeText2(),
-                DescriptionCard()
+                DescriptionCard(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    width: double.infinity,
+                    height: 240,
+                    child: ListView.builder(
+                      itemCount: weatherImages.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: ((context, index) {
+                      return CardItems(weatherImage: weatherImages[index], weatherCity: weatherCities[index], city: cities[index], number: numbers[index]);
+                    })),
+
+                  ),
+                )
           
               ],
             ),
