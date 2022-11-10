@@ -71,7 +71,7 @@ class _DetailsAQIState extends State<DetailsAQI> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Container(
-                        width: 260,
+                        width: 253,
                         height: 70,
                         child: Text("Kualitas udara di daerahmu untuk saat ini sangat baik.Tidak ada pencearan udara yang menyebabkan berbagai penyakit.",style: TextStyle(color: Color(0xff201C1C),fontSize: 13,fontWeight: FontWeight.w400),)),
                     )
