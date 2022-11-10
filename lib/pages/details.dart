@@ -93,6 +93,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
     "10.00 PM",
     "11.00 PM",
   ];
+  List<String> informations=[
+    "86%",
+    "940hPa",
+    "1km/h",
+    "14%",
+  ];
+  List<String>w_city=[
+    "Kelembaban",
+    "Tekanan Udara",
+    "Kecepatan Angin",
+    "Kaput",
+  ];
+  List<String>w_image=[
+    "assets/images/blaze-line.png",
+    "assets/images/haze-2-line.png",
+    "assets/images/windy-line.png",
+    "assets/images/mist-line.png",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +145,55 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     padding: const EdgeInsets.only(top: 8,left: 10),
                     child: DetailsAQI(),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      //color: Colors.red,
+                      width: double.infinity,
+                      height: 140,
+                      child: GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 9 / 3,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,),
+                        itemCount: informations.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              //color: Colors.green,
+                              color: Color(0xffFAFAFA),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(w_image[index]),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 13),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(informations[index],style: TextStyle(color: Color(0xff201C1C),fontSize: 14,fontWeight: FontWeight.w600),),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top:5.0),
+                                        child: Text(w_city[index],style: TextStyle(color: Color(0xff494343),fontSize: 13,fontWeight: FontWeight.w400),),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                              
+                            ),
+
+                          );
+                        },
+                        ),
+                    ),
+                  )
             ],
           ),
         ),

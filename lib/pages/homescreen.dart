@@ -134,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   height: 123,
                   child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: images.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: ((context, index) {
