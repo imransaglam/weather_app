@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -126,21 +127,26 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HomeAppBar(),
-                HomeDescription(),
+                FadeIn(
+                  duration: Duration(seconds: 5),
+                  child: HomeAppBar()),
+                Bounce(
+                  child: HomeDescription()),
                 HomeText(),
-                Container(
-                  //color: Colors.red,
-                  width: double.infinity,
-                  height: 123,
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: images.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) {
-                    return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
-                  
-                  })),
+                SlideInLeft(
+                  child: Container(
+                    //color: Colors.red,
+                    width: double.infinity,
+                    height: 123,
+                    child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: images.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, index) {
+                      return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
+                    
+                    })),
+                  ),
                 ),
                 HomeText2(),
                 DescriptionCard(),

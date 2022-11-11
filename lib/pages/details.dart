@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -125,18 +126,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 padding: const EdgeInsets.only(top: 8,left: 10),
                 child: HomeText(),
               ),
-              Container(
-                    //color: Colors.red,
-                    width: double.infinity,
-                    height: 123,
-                    child: ListView.builder(
-                      itemCount: images.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                      return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
-                    
-                    })),
-                  ),
+              ElasticInRight(
+                child: Container(
+                      //color: Colors.red,
+                      width: double.infinity,
+                      height: 123,
+                      child: ListView.builder(
+                        itemCount: images.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) {
+                        return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
+                      
+                      })),
+                    ),
+              ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8,left: 10),
                     child: DetailsInformation(),
