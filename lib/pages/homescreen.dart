@@ -2,7 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/widgets/homescree_desc_text2.dart';
 import 'package:weather/widgets/homescreen_appbar.dart';
 import 'package:weather/widgets/homescreen_card_items.dart';
@@ -19,6 +21,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+    @override
+    void initState(){
+     
+  WidgetsBinding.instance.addPostFrameCallback(
+    (_) => ShowCaseWidget.of(context).startShowCase(
+      [
+        _key1,
+        _key2,
+      ],
+    ),
+  );  final wetProvider=Provider.of<WeatherProvider>(context,listen:false);
+      wetProvider.getWeatherData(context);
+      super.initState();
+    
+    }
   List<String>images=[
     "assets/images/partly_cloudy.png",
     "assets/images/rainy.png",
@@ -119,17 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   final _key1=GlobalKey();
   final _key2=GlobalKey();
-void initState() {
-  super.initState();
-  WidgetsBinding.instance!.addPostFrameCallback(
-    (_) => ShowCaseWidget.of(context)!.startShowCase(
-      [
-        _key1,
-        _key2,
-      ],
-    ),
-  );
-}
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +150,7 @@ void initState() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FadeIn(
-                  duration: Duration(seconds: 5),
+                  duration: Duration(seconds: 3000),
                   child: HomeAppBar()),
                 Bounce(
                   child: Showcase(
