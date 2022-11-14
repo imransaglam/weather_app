@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:weather/widgets/homescree_desc_text2.dart';
 import 'package:weather/widgets/homescreen_appbar.dart';
 import 'package:weather/widgets/homescreen_card_items.dart';
@@ -116,6 +117,20 @@ class _HomeScreenState extends State<HomeScreen> {
     "17",
     "17",
   ];
+  final _key1=GlobalKey();
+  final _key2=GlobalKey();
+void initState() {
+  super.initState();
+  WidgetsBinding.instance!.addPostFrameCallback(
+    (_) => ShowCaseWidget.of(context)!.startShowCase(
+      [
+        _key1,
+        _key2,
+      ],
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,21 +146,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   duration: Duration(seconds: 5),
                   child: HomeAppBar()),
                 Bounce(
-                  child: HomeDescription()),
+                  child: Showcase(
+                    key:_key1,
+                    description: "You can see the weather in your area",
+                    child: HomeDescription())),
                 HomeText(),
                 SlideInLeft(
-                  child: Container(
-                    //color: Colors.red,
-                    width: double.infinity,
-                    height: 123,
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: images.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                      return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
-                    
-                    })),
+                  child: Showcase(
+                    key: _key2,
+                    description: "You can see the hourly weather in your area",
+                    child: Container(
+                      //color: Colors.red,
+                      width: double.infinity,
+                      height: 123,
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: images.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) {
+                        return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
+                      
+                      })),
+                    ),
                   ),
                 ),
                 HomeText2(),
