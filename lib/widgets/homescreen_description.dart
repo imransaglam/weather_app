@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:weather/models/current_weather_response.dart';
 import 'package:weather/pages/details.dart';
 
 class HomeDescription extends StatefulWidget {
-  const HomeDescription({super.key});
+  final CurretWeatherResponse curretWeatherResponse;
+  const HomeDescription({super.key, required this.curretWeatherResponse});
 
   @override
   State<HomeDescription> createState() => _HomeDescriptionState();
@@ -37,7 +39,7 @@ class _HomeDescriptionState extends State<HomeDescription> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Senin, 20 Desember 2021",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+                Text(widget.curretWeatherResponse.sys!.country.toString()+ "  20 Desember 2021",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
                 Text("3.30 PM",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
               ],
             ),
@@ -52,8 +54,8 @@ class _HomeDescriptionState extends State<HomeDescription> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("18° C",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
-               Text("Hujan  Berawan",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)],
+                Text(widget.curretWeatherResponse.main!.temp!.toInt().toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
+               Text(widget.curretWeatherResponse.name.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)],
             ),
           ),
           Positioned(

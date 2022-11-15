@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:weather/models/current_weather_response.dart';
 
 class HomeText extends StatefulWidget {
-  const HomeText({super.key});
+
+  const HomeText({super.key,});
 
   @override
   State<HomeText> createState() => _HomeTextState();

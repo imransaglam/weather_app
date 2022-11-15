@@ -16,6 +16,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       width:double.infinity,
       height: 30,
       //color: Colors.red,

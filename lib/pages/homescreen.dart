@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:weather/models/current_weather_response.dart';
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/widgets/homescree_desc_text2.dart';
 import 'package:weather/widgets/homescreen_appbar.dart';
@@ -14,7 +15,8 @@ import 'package:weather/widgets/homescreen_description.dart';
 import 'package:weather/widgets/homescreen_weather_items.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+   
+   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -22,6 +24,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
     @override
+      WeatherProvider ?wetProvider;
+  final _key1=GlobalKey();
+  final _key2=GlobalKey();
     void initState(){
      
   WidgetsBinding.instance.addPostFrameCallback(
@@ -31,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
         _key2,
       ],
     ),
-  );  final wetProvider=Provider.of<WeatherProvider>(context,listen:false);
-      wetProvider.getWeatherData(context);
+  ); 
+    wetProvider=Provider.of<WeatherProvider>(context,listen:false);
+      wetProvider!.getWeatherData(context);
       super.initState();
     
     }
@@ -134,30 +140,39 @@ class _HomeScreenState extends State<HomeScreen> {
     "17",
     "17",
   ];
-  final _key1=GlobalKey();
-  final _key2=GlobalKey();
+
+ 
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:SafeArea(
-        child: Padding(
+      body: Padding(
           padding: EdgeInsets.only(left:15,right: 15,top: 10),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                FadeIn(
-                  duration: Duration(seconds: 3000),
+                Padding(
+                  padding: EdgeInsets.only(top: 20,bottom: 10),
                   child: HomeAppBar()),
-                Bounce(
-                  child: Showcase(
-                    key:_key1,
-                    description: "You can see the weather in your area",
-                    child: HomeDescription())),
-                HomeText(),
+                   Consumer(
+                    builder: ((context, WeatherProvider weathProvider, child) => weathProvider.isLoading==true?CircularProgressIndicator():
+                    Showcase(
+                      key:_key1,
+                      description: "You can see the weather in your area",
+                      child: HomeDescription(curretWeatherResponse: wetProvider!.response,))
+                    ),
+                  ),
+                Consumer(
+                  builder: (context, WeatherProvider weathProvider1, child) => weathProvider1.isLoading==true?CircularProgressIndicator():
+                   Padding(
+                              padding: const EdgeInsets.only(top: 20,left:3,bottom: 8),
+                              child: Text(weathProvider1.response.name.toString(),style: TextStyle(fontSize: 20,fontWeight:FontWeight.w500),),
+                             ),
+                  
+                ),
                 SlideInLeft(
                   child: Showcase(
                     key: _key2,
@@ -180,11 +195,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 HomeText2(),
                 DescriptionCard(),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Container(
                     width: double.infinity,
-                    height: 240,
+                    height: 300,
                     child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: weatherImages.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: ((context, index) {
@@ -198,7 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
+        
+       
+    
   }
 }
