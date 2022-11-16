@@ -40,7 +40,7 @@ class _HomeDescriptionState extends State<HomeDescription> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.curretWeatherResponse.sys!.country.toString()+ "  20 Desember 2021",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
-                Text("3.30 PM",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+                Text("${DateTime.fromMicrosecondsSinceEpoch(widget.curretWeatherResponse.dt!).hour}:${DateTime.fromMicrosecondsSinceEpoch(widget.curretWeatherResponse.dt!).minute}",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
               ],
             ),
           ),
@@ -55,7 +55,7 @@ class _HomeDescriptionState extends State<HomeDescription> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.curretWeatherResponse.main!.temp!.toInt().toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
-               Text(widget.curretWeatherResponse.name.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)],
+               Text(widget.curretWeatherResponse.weather![0].description.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)],
             ),
           ),
           Positioned(
@@ -63,7 +63,7 @@ class _HomeDescriptionState extends State<HomeDescription> {
             left: 25,
             child: Row(
               children: [
-                Text("Terakhir update 3.00 PM ",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+                Text(widget.curretWeatherResponse.name.toString(),style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
                 Image.asset("assets/images/refresh.png")
               ],
             ),

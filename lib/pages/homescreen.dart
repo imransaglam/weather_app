@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather/models/current_weather_response.dart';
+import 'package:weather/models/weather_forecast_response.dart';
+import 'package:weather/provider/forecasting_provider.dart';
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/widgets/homescree_desc_text2.dart';
 import 'package:weather/widgets/homescreen_appbar.dart';
@@ -25,6 +27,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
     @override
       WeatherProvider ?wetProvider;
+      ForecastingProvider ?forecastingProvider;
+      
+
   final _key1=GlobalKey();
   final _key2=GlobalKey();
     void initState(){
@@ -39,8 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ); 
     wetProvider=Provider.of<WeatherProvider>(context,listen:false);
       wetProvider!.getWeatherData(context);
+
+      forecastingProvider=Provider.of<ForecastingProvider>(context,listen:false);
+      forecastingProvider!.getForecastingData(context);
       super.initState();
-    
+      
+
     }
   List<String>images=[
     "assets/images/partly_cloudy.png",
@@ -162,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Showcase(
                       key:_key1,
                       description: "You can see the weather in your area",
-                      child: HomeDescription(curretWeatherResponse: wetProvider!.response,))
+                      child: HomeDescription(curretWeatherResponse: weathProvider.response,))
                     ),
                   ),
                 Consumer(
@@ -173,22 +182,57 @@ class _HomeScreenState extends State<HomeScreen> {
                              ),
                   
                 ),
-                SlideInLeft(
-                  child: Showcase(
-                    key: _key2,
-                    description: "You can see the hourly weather in your area",
-                    child: Container(
-                      //color: Colors.red,
-                      width: double.infinity,
-                      height: 123,
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: images.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) {
-                        return WeatherItems(image: images[index], weather: weathers[index], time: times[index]);
-                      
-                      })),
+                Consumer(
+                  builder: (context, ForecastingProvider forecastProvider, child) => forecastingProvider?.isLoading==true?CircularProgressIndicator():
+                   SlideInLeft(
+                    child: Showcase(
+                      key: _key2,
+                      description: "You can see the hourly weather in your area",
+                      child: Container(
+                        //color: Colors.red,
+                        width: double.infinity,
+                        height: 123,
+                        child: ListView.builder(
+                          //physics: NeverScrollableScrollPhysics(),
+                          itemCount: forecastProvider.response.list!.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ((context, index) {
+                          return Padding(
+                      padding: const EdgeInsets.only(left:10,top: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                         wetProvider!.response.main!.temp=forecastProvider.response.list![index].main!.temp;
+                         wetProvider!.response.dt!=forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5);
+                         wetProvider!.notifyListeners();
+                         
+                        },
+                        child: Container(
+                          width: 78,
+                          //height: 107,
+                         
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color:Color(0xfffbfbfb)
+                             //color: Colors.green,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/images/partly_cloudy.png",),
+                                Text(forecastProvider.response.list![index].main!.temp!.toInt().toString(),style: TextStyle(color: Color(0xff201C1C),fontSize: 14,fontWeight: FontWeight.w600),),
+                                Text(
+                                  forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5),style: TextStyle(color: Color(0xff494343),fontSize: 12,fontWeight: FontWeight.w400))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                        
+                        })),
+                      ),
                     ),
                   ),
                 ),

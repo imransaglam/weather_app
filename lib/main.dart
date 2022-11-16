@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather/pages/homescreen.dart';
+import 'package:weather/provider/forecasting_provider.dart';
 import 'package:weather/provider/weather_provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<WeatherProvider>(create: (_)=>WeatherProvider())
+    ChangeNotifierProvider<WeatherProvider>(create: (_)=>WeatherProvider()),
+     ChangeNotifierProvider<ForecastingProvider>(create: (_)=>ForecastingProvider())
   ],child: const MyApp()));
 }
 
@@ -25,4 +27,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
