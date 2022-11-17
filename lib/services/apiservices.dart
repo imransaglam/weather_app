@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:weather/models/current_weather_response.dart';
 import 'package:http/http.dart' as http ;
 import 'package:weather/models/weather_forecast_response.dart';
@@ -21,9 +22,15 @@ Future<CurretWeatherResponse?>getCurrentData() async{
   Future<WeatherForecastResponse?>getCurrentData2() async{
   WeatherForecastResponse forecastingResponse;
   try{
-    final response=await http.get(Uri.parse(
-      "https://api.openweathermap.org/data/2.5/forecast?lat=41.0327&lon=29.0319&appid=a33b01591c63f70c4db98974b0da27e3&units=metric"));
-      forecastingResponse=WeatherForecastResponse.fromJson(jsonDecode(response.body));
+    //-----http-------
+    // final response=await http.get(Uri.parse(
+      // "https://api.openweathermap.org/data/2.5/forecast?lat=41.0327&lon=29.0319&appid=a33b01591c63f70c4db98974b0da27e3&units=metric"));
+    //------Dio()------
+      //final response=await Dio().get("https://api.openweathermap.org/data/2.5/forecast?lat=41.0327&lon=29.0319&appid=a33b01591c63f70c4db98974b0da27e3&units=metric");
+     //------Dio()-----
+      final response = await Dio().get('https://api.openweathermap.org/data/2.5/forecast', queryParameters: {'lat': 41.0327, 'lon': 29.0319,'appid': 'a33b01591c63f70c4db98974b0da27e3', 'units': 'metric'});
+      forecastingResponse=WeatherForecastResponse.fromJson(response.data);
+      print(forecastingResponse.city!.sunrise);
       return forecastingResponse;
     
   }
@@ -31,3 +38,4 @@ Future<CurretWeatherResponse?>getCurrentData() async{
     log(e.toString());
   }
   }
+  

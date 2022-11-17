@@ -7,6 +7,8 @@ class WeatherProvider with ChangeNotifier{
   CurretWeatherResponse response= CurretWeatherResponse();
   bool isLoading=false;
 
+
+
   getWeatherData(context) async {
     isLoading=true;
     response=(await getCurrentData())!;

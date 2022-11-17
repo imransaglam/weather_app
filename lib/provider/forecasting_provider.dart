@@ -5,6 +5,7 @@ import 'package:weather/services/apiservices.dart';
 class ForecastingProvider with ChangeNotifier{
   WeatherForecastResponse response= WeatherForecastResponse();
   bool isLoading=false;
+  int currentIndex=0;
 
   getForecastingData(context) async {
     isLoading=true;
@@ -13,5 +14,8 @@ class ForecastingProvider with ChangeNotifier{
     isLoading=false;
     notifyListeners();
   }
-
+setCurrentIndex(int deger){
+  currentIndex=deger;
+  notifyListeners();
+}
 }

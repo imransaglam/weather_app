@@ -201,10 +201,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(left:10,top: 10),
                       child: GestureDetector(
                         onTap: () {
+
                          wetProvider!.response.main!.temp=forecastProvider.response.list![index].main!.temp;
-                         wetProvider!.response.dt!=forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5);
-                         wetProvider!.notifyListeners();
-                         
+                         print(forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5).toString());
+                         print(forecastProvider.response.list![index].weather![0].description!.toString());
+                       // wetProvider!.response.dt!=int.parse(forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5).toString());
+                         forecastProvider.setCurrentIndex(index);
+
                         },
                         child: Container(
                           width: 78,

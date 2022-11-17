@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:weather/models/current_weather_response.dart';
 import 'package:weather/pages/details.dart';
+import 'package:weather/provider/forecasting_provider.dart';
+import 'package:weather/provider/weather_provider.dart';
 
 class HomeDescription extends StatefulWidget {
   final CurretWeatherResponse curretWeatherResponse;
@@ -16,7 +19,9 @@ class HomeDescription extends StatefulWidget {
 class _HomeDescriptionState extends State<HomeDescription> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Consumer(builder: (context,ForecastingProvider value, child) {
+     return value.isLoading?CircularProgressIndicator():
+          GestureDetector(
        onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: ((context) => DetailsScreen())));
             },
@@ -39,8 +44,9 @@ class _HomeDescriptionState extends State<HomeDescription> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.curretWeatherResponse.sys!.country.toString()+ "  20 Desember 2021",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
-                Text("${DateTime.fromMicrosecondsSinceEpoch(widget.curretWeatherResponse.dt!).hour}:${DateTime.fromMicrosecondsSinceEpoch(widget.curretWeatherResponse.dt!).minute}",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+                Text(widget.curretWeatherResponse.sys!.country.toString(),style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+                Text("${value.response.list![value.currentIndex].dtTxt.toString().split(" ").last.toString().substring(0,5).toString()}",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
+              Text("${value.response.list![value.currentIndex].dtTxt.toString().split(" ").first.toString().substring(0,10).toString()}",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400),),
               ],
             ),
           ),
@@ -55,7 +61,9 @@ class _HomeDescriptionState extends State<HomeDescription> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.curretWeatherResponse.main!.temp!.toInt().toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
-               Text(widget.curretWeatherResponse.weather![0].description.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)],
+               //Text(widget.curretWeatherResponse.weather![0].description.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)
+                Text("${value.response.list![value.currentIndex].weather![0].description!.name.toString()}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)
+               ],
             ),
           ),
           Positioned(
@@ -71,5 +79,8 @@ class _HomeDescriptionState extends State<HomeDescription> {
         ],
       ),
     );
-  }
+
+    },);
+    
+    }
 }
