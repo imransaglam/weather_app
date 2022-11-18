@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset("assets/images/partly_cloudy.png",),
+                                 Image.network("http://openweathermap.org/img/wn/${forecastProvider.response.list![index].weather?.first.icon ?? "10d"}@2x.png"),
                                 Text(forecastProvider.response.list![index].main!.temp!.toInt().toString(),style: TextStyle(color: Color(0xff201C1C),fontSize: 14,fontWeight: FontWeight.w600),),
                                 Text(
                                   forecastProvider.response.list![index].dtTxt.toString().split(" ").last.toString().substring(0,5),style: TextStyle(color: Color(0xff494343),fontSize: 12,fontWeight: FontWeight.w400))

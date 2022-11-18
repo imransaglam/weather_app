@@ -53,7 +53,8 @@ class _HomeDescriptionState extends State<HomeDescription> {
           Positioned(
             top: 55,
             left: 5,
-            child: Image.asset("assets/images/Group21.png")),
+            child: Image.network("http://openweathermap.org/img/wn/${value.response.list![value.currentIndex].weather?.first.icon ?? "10d"}@2x.png")),
+            //"http://openweathermap.org/img/wn/${provider.clockItem?.weather?.first.icon ?? "10d"}@2x.png"
           Positioned(
             top: 70,
             left: 110,
@@ -62,7 +63,7 @@ class _HomeDescriptionState extends State<HomeDescription> {
               children: [
                 Text(widget.curretWeatherResponse.main!.temp!.toInt().toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
                //Text(widget.curretWeatherResponse.weather![0].description.toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)
-                Text("${value.response.list![value.currentIndex].weather![0].description!.name.toString()}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)
+                Text("${value.response.list![value.currentIndex].weather![0].description!}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),)
                ],
             ),
           ),
