@@ -63,7 +63,7 @@ class _CardDetailsState extends State<CardDetails> {
                ),
                Padding(
                  padding: const EdgeInsets.only(top:0),
-                 child: Text(widget.curretWeatherResponse.main!.temp!.toInt().toString(),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
+                 child: Text("${value.response.list![value.currentIndex].main!.temp.toInt().toString()}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w400),),
                ),
                Padding(
                  padding: const EdgeInsets.only(top:10),
